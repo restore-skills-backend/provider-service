@@ -1,0 +1,63 @@
+server:
+  port: 8084
+
+spring:
+  application:
+    name: restore-provider-service
+
+  profiles:
+    active: local
+
+  security:
+    oauth2:
+      resourceserver:
+        opaquetoken:
+          introspection-uri: ${keycloak.base-url}/realms/${keycloak.realm}/protocol/openid-connect/token/introspect
+          client-id: ${keycloak.client-id}
+          client-secret: ${keycloak.client-secret}
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/restore_local
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+  hikari:
+    maximum-pool-size: 1
+    minimum-idle: 5
+
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 50000
+        readTimeout: 50000
+        loggerLevel: basic
+    notification:
+      url: http://localhost:8002/
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+keycloak:
+  realm: development
+  base-url: https://localhost:8090/
+  auth-url: ${keycloak.base-url}/
+  client-id: restore-dev
+  client-secret: secret
+
+aws:
+  access-key: access-key
+  secret-key: secret-key
+  region: region
+  s3:
+    bucket-name: bucket-name
+
+springdoc:
+  swagger-ui:
+    path: /api/provider/swagger-ui.html
+  api-docs:
+    path: /api/provider/api-docs
+  show-actuator: true

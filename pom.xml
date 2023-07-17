@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>3.1.0</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+	<groupId>com.restore</groupId>
+	<artifactId>provider-service</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>provider-service</name>
+	<description>Provider Service for Restore skills</description>
+	<properties>
+		<java.version>17</java.version>
+		<spring-cloud.version>2022.0.3</spring-cloud.version>
+		<keycloak-client.version>21.1.1</keycloak-client.version>
+		<restore-core.version>0.0.2-SNAPSHOT</restore-core.version>
+		<aws.version>2.17.28</aws.version>
+	</properties>
+	<dependencies>
+		<dependency>
+			<groupId>com.restore</groupId>
+			<artifactId>restore-core</artifactId>
+			<version>${restore-core.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.liquibase</groupId>
+					<artifactId>liquibase-core</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>software.amazon.awssdk</groupId>
+			<artifactId>s3</artifactId>
+			<version>${aws.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>${spring-cloud.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<build>
+		<finalName>provider-service</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<mainClass>com.restore.providerservice.ProviderServiceApplication</mainClass>
+					<layout>JAR</layout>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+<!--	<repositories>-->
+<!--		<repository>-->
+<!--			<id>central</id>-->
+<!--			<url>https://repo1.maven.org/maven2</url>-->
+<!--			<releases><enabled>true</enabled></releases>-->
+<!--			<snapshots><enabled>true</enabled></snapshots>-->
+<!--		</repository>-->
+<!--		<repository>-->
+<!--			<id>github</id>-->
+<!--			<url>https://maven.pkg.github.com/restore-skills-backend/restore-core</url>-->
+<!--			<snapshots>-->
+<!--				<enabled>true</enabled>-->
+<!--			</snapshots>-->
+<!--		</repository>-->
+<!--	</repositories>-->
+
+</project>
